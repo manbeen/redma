@@ -10,6 +10,11 @@
 
 @interface ViewController : UIViewController
 
+@property (strong, nonatomic) IBOutlet UILabel *errorLabel;
+@property (strong, nonatomic) IBOutlet UILabel *temperatureLabel;
+@property (strong, nonatomic) IBOutlet UILabel *smokeLabel;
+@property (strong, nonatomic) IBOutlet UILabel *waterLabel;
+@property (strong, nonatomic) IBOutlet UILabel *timestampLabel;
 
 @end
 
