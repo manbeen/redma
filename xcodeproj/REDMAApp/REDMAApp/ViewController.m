@@ -141,7 +141,7 @@
         // 2. creating a request object
         // 3. creating a URL Connection object
         // 4. sending an asyncrhonous request to the web service URL
-        NSURL *subscriberURL = [NSURL URLWithString: @"http://192.168.1.102:3000/sensoryData/1"];
+        NSURL *subscriberURL = [NSURL URLWithString: @"http://jkhomeserver.dyndns.org:3000/sensoryData/1"];
         NSURLRequest *subscriberRequest = [NSURLRequest requestWithURL:subscriberURL];
         [NSURLConnection sendAsynchronousRequest:subscriberRequest
                                            queue:[NSOperationQueue mainQueue]
