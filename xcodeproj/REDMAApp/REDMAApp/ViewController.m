@@ -98,7 +98,6 @@
                              self.waterLabel.textColor = [UIColor greenColor];
                          } else if( [keyAsString isEqualToString:@"timestamp"]) {
                              self.timestampLabel.text = valueAsString;
-                             self.timestampLabel.textColor = [UIColor greenColor];
                          }
                      }
                  }
