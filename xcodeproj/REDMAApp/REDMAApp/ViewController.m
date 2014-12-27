@@ -83,6 +83,13 @@
                          NSString *valueAsString = nil;
                          if([value isKindOfClass:[NSString class]]) {
                              valueAsString = (NSString *)value;
+                         } else if ([value isKindOfClass:[NSNumber class]]) {
+                             NSNumberFormatter *numberFormatter = [[NSNumberFormatter alloc] init];
+                             [numberFormatter setNumberStyle:NSNumberFormatterDecimalStyle];
+                             [numberFormatter setUsesGroupingSeparator:NO];
+                             [numberFormatter setMaximumFractionDigits:2];
+                             [numberFormatter setMinimumFractionDigits:0];
+                             valueAsString = [numberFormatter stringFromNumber:(NSNumber*)value];
                          } else {
                              valueAsString = [value stringValue];
                          }
@@ -91,11 +98,11 @@
                              self.temperatureLabel.text = valueAsString;
                              self.temperatureLabel.textColor = [UIColor greenColor];
                          } else if( [keyAsString isEqualToString:@"sensor2"]) {
-                             self.smokeLabel.text = valueAsString;
-                             self.smokeLabel.textColor = [UIColor greenColor];
-                         } else if( [keyAsString isEqualToString:@"sensor3"]) {
                              self.waterLabel.text = valueAsString;
                              self.waterLabel.textColor = [UIColor greenColor];
+                         } else if( [keyAsString isEqualToString:@"sensor3"]) {
+                             self.smokeLabel.text = valueAsString;
+                             self.smokeLabel.textColor = [UIColor greenColor];
                          } else if( [keyAsString isEqualToString:@"timestamp"]) {
                              self.timestampLabel.text = valueAsString;
                          }
