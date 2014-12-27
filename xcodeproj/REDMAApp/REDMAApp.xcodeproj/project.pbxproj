@@ -14,6 +14,14 @@
 		B3B36E201A4E421300D4071A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B3B36E1F1A4E421300D4071A /* Images.xcassets */; };
 		B3B36E231A4E421300D4071A /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = B3B36E211A4E421300D4071A /* LaunchScreen.xib */; };
 		B3B36E2F1A4E421300D4071A /* REDMAAppTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B3B36E2E1A4E421300D4071A /* REDMAAppTests.m */; };
+		B3B36E451A4E680E00D4071A /* cartoon_fire.gif in Resources */ = {isa = PBXBuildFile; fileRef = B3B36E441A4E680E00D4071A /* cartoon_fire.gif */; };
+		B3B36E471A4E682700D4071A /* Screen Shot 2014-12-26 at 7.44.59 PM.png in Resources */ = {isa = PBXBuildFile; fileRef = B3B36E461A4E682700D4071A /* Screen Shot 2014-12-26 at 7.44.59 PM.png */; };
+		B3B36E491A4E683E00D4071A /* Unknown.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = B3B36E481A4E683E00D4071A /* Unknown.jpeg */; };
+		B3B36E4B1A4E684A00D4071A /* flooded-house.png in Resources */ = {isa = PBXBuildFile; fileRef = B3B36E4A1A4E684A00D4071A /* flooded-house.png */; };
+		B3B36E4D1A4E685200D4071A /* Earth_w_fever.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B3B36E4C1A4E685200D4071A /* Earth_w_fever.jpg */; };
+		B3B36E551A4E6EEB00D4071A /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = B3B36E541A4E6EEB00D4071A /* Icon.png */; };
+		B3B36E571A4E719800D4071A /* Screen Shot 2014-12-26 at 8.47.36 PM.png in Resources */ = {isa = PBXBuildFile; fileRef = B3B36E561A4E719800D4071A /* Screen Shot 2014-12-26 at 8.47.36 PM.png */; };
+		B3B36E591A4E73F300D4071A /* Untitled.png in Resources */ = {isa = PBXBuildFile; fileRef = B3B36E581A4E73F300D4071A /* Untitled.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,6 +48,14 @@
 		B3B36E281A4E421300D4071A /* REDMAAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = REDMAAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B3B36E2D1A4E421300D4071A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B3B36E2E1A4E421300D4071A /* REDMAAppTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = REDMAAppTests.m; sourceTree = "<group>"; };
+		B3B36E441A4E680E00D4071A /* cartoon_fire.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = cartoon_fire.gif; sourceTree = "<group>"; };
+		B3B36E461A4E682700D4071A /* Screen Shot 2014-12-26 at 7.44.59 PM.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Screen Shot 2014-12-26 at 7.44.59 PM.png"; sourceTree = "<group>"; };
+		B3B36E481A4E683E00D4071A /* Unknown.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Unknown.jpeg; sourceTree = "<group>"; };
+		B3B36E4A1A4E684A00D4071A /* flooded-house.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "flooded-house.png"; sourceTree = "<group>"; };
+		B3B36E4C1A4E685200D4071A /* Earth_w_fever.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Earth_w_fever.jpg; sourceTree = "<group>"; };
+		B3B36E541A4E6EEB00D4071A /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
+		B3B36E561A4E719800D4071A /* Screen Shot 2014-12-26 at 8.47.36 PM.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Screen Shot 2014-12-26 at 8.47.36 PM.png"; sourceTree = "<group>"; };
+		B3B36E581A4E73F300D4071A /* Untitled.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Untitled.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -84,9 +100,17 @@
 				B3B36E161A4E421300D4071A /* AppDelegate.h */,
 				B3B36E171A4E421300D4071A /* AppDelegate.m */,
 				B3B36E191A4E421300D4071A /* ViewController.h */,
+				B3B36E461A4E682700D4071A /* Screen Shot 2014-12-26 at 7.44.59 PM.png */,
+				B3B36E481A4E683E00D4071A /* Unknown.jpeg */,
+				B3B36E4A1A4E684A00D4071A /* flooded-house.png */,
+				B3B36E581A4E73F300D4071A /* Untitled.png */,
+				B3B36E561A4E719800D4071A /* Screen Shot 2014-12-26 at 8.47.36 PM.png */,
 				B3B36E1A1A4E421300D4071A /* ViewController.m */,
+				B3B36E4C1A4E685200D4071A /* Earth_w_fever.jpg */,
+				B3B36E441A4E680E00D4071A /* cartoon_fire.gif */,
 				B3B36E1C1A4E421300D4071A /* Main.storyboard */,
 				B3B36E1F1A4E421300D4071A /* Images.xcassets */,
+				B3B36E541A4E6EEB00D4071A /* Icon.png */,
 				B3B36E211A4E421300D4071A /* LaunchScreen.xib */,
 				B3B36E121A4E421300D4071A /* Supporting Files */,
 			);
@@ -199,8 +223,16 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B3B36E551A4E6EEB00D4071A /* Icon.png in Resources */,
+				B3B36E571A4E719800D4071A /* Screen Shot 2014-12-26 at 8.47.36 PM.png in Resources */,
+				B3B36E451A4E680E00D4071A /* cartoon_fire.gif in Resources */,
+				B3B36E471A4E682700D4071A /* Screen Shot 2014-12-26 at 7.44.59 PM.png in Resources */,
+				B3B36E591A4E73F300D4071A /* Untitled.png in Resources */,
+				B3B36E491A4E683E00D4071A /* Unknown.jpeg in Resources */,
+				B3B36E4D1A4E685200D4071A /* Earth_w_fever.jpg in Resources */,
 				B3B36E1E1A4E421300D4071A /* Main.storyboard in Resources */,
 				B3B36E231A4E421300D4071A /* LaunchScreen.xib in Resources */,
+				B3B36E4B1A4E684A00D4071A /* flooded-house.png in Resources */,
 				B3B36E201A4E421300D4071A /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -342,8 +374,9 @@
 		B3B36E331A4E421300D4071A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				INFOPLIST_FILE = REDMAApp/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -352,8 +385,9 @@
 		B3B36E341A4E421300D4071A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				INFOPLIST_FILE = REDMAApp/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};

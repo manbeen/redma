@@ -12,9 +12,11 @@
 
 @property (strong, nonatomic) IBOutlet UILabel *errorLabel;
 @property (strong, nonatomic) IBOutlet UILabel *temperatureLabel;
-@property (strong, nonatomic) IBOutlet UILabel *smokeLabel;
-@property (strong, nonatomic) IBOutlet UILabel *waterLabel;
+//@property (strong, nonatomic) IBOutlet UILabel *smokeLabel;
+//@property (strong, nonatomic) IBOutlet UILabel *waterLabel;
 @property (strong, nonatomic) IBOutlet UILabel *timestampLabel;
+@property (strong, nonatomic) IBOutlet UIButton *smokeButton;
+@property (strong, nonatomic) IBOutlet UIButton *waterButton;
 
 @end
 

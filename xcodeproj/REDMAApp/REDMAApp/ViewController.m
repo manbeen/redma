@@ -9,6 +9,12 @@
 #import "ViewController.h"
 
 @interface ViewController ()
+{
+    NSString *waterValue;
+    NSString *smokeValue;
+    bool waterValueToggle;
+    bool smokeValueToggle;
+}
 
 @end
 
@@ -26,21 +32,45 @@
     // Dispose of any resources that can be recreated.
 }
 
-
-- (IBAction)handleClick:(id)sender {
+- (IBAction)handleRefreshButtonClick:(id)sender {
     [self getDataFromWebservice];
 }
 
-- (void) clearLabels {
+
+- (IBAction)handleSmokeButtonClick:(id)sender {
+    if(smokeValueToggle) {
+        [self.smokeButton setTitle:smokeValue forState:UIControlStateNormal];
+        smokeValueToggle = NO;
+    } else {
+        [self.smokeButton setTitle:@"OK" forState:UIControlStateNormal];
+        smokeValueToggle = YES;
+    }
+}
+
+- (IBAction)handleWaterButtonClick:(id)sender {
+    if(waterValueToggle) {
+        [self.waterButton setTitle:waterValue forState:UIControlStateNormal];
+        waterValueToggle = NO;
+    } else {
+        [self.waterButton setTitle:@"OK" forState:UIControlStateNormal];
+        waterValueToggle = YES;
+    }
+}
+
+- (void) clearData{
+    waterValue = @"";
+    smokeValue = @"";
+    waterValueToggle = YES;
+    smokeValueToggle = YES;
     self.errorLabel.text = @"";
     self.temperatureLabel.text = @"";
-    self.waterLabel.text = @"";
-    self.smokeLabel.text = @"";
+    [self.waterButton setTitle:@"" forState:UIControlStateNormal];
+    [self.smokeButton setTitle:@"" forState:UIControlStateNormal];
     self.timestampLabel.text = @"";
 }
 
 - (void) displayError {
-    [self clearLabels];
+    [self clearData];
     self.errorLabel.text = @"WebService connection failed :-(";
     self.errorLabel.textColor = [UIColor redColor];
 }
@@ -48,7 +78,7 @@
 -(void) getDataFromWebservice {
     bool errorOccurred = NO;
     @try {
-        [self clearLabels];
+        [self clearData];
         
         NSURL *subscriberURL = [NSURL URLWithString: @"http://192.168.1.102:3000/sensoryData/1"];
         NSURLRequest *subscriberRequest = [NSURLRequest requestWithURL:subscriberURL];
@@ -98,11 +128,13 @@
                              self.temperatureLabel.text = valueAsString;
                              self.temperatureLabel.textColor = [UIColor greenColor];
                          } else if( [keyAsString isEqualToString:@"sensor2"]) {
-                             self.waterLabel.text = valueAsString;
-                             self.waterLabel.textColor = [UIColor greenColor];
+                             waterValue = valueAsString;
+                             [self.waterButton setTitle:@"OK" forState:UIControlStateNormal];
+                             [self.waterButton setTitleColor:[UIColor greenColor] forState:UIControlStateNormal];
                          } else if( [keyAsString isEqualToString:@"sensor3"]) {
-                             self.smokeLabel.text = valueAsString;
-                             self.smokeLabel.textColor = [UIColor greenColor];
+                             smokeValue = valueAsString;
+                             [self.smokeButton setTitle:@"OK" forState:UIControlStateNormal];
+                             [self.smokeButton setTitleColor:[UIColor greenColor] forState:UIControlStateNormal];
                          } else if( [keyAsString isEqualToString:@"timestamp"]) {
                              self.timestampLabel.text = valueAsString;
                          }
