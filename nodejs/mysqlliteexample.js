@@ -67,7 +67,7 @@ app.get("/nodeconfig/:nodeid", function(req,res) {
 app.get("/sensorydata/:nodeid", function(req,res) {
         var db = new sqlite3.Database(file);
         res.setHeader('Content-Type','application/json');
-        var stmt = db.prepare("select * from table_sensory_data where nodeid = ? order by timestamp desc limit 1");
+        var stmt = db.prepare("select sd.*, (sd.sensor1-nd.th_sensor1) as sensor1th, (sd.sensor2-nd.th_sensor2) as sensorth2, (nd.th_sensor3-sd.sensor3) as sensorth3 from table_sensory_data sd, table_node_configuration nd where sd.nodeid = nd.nodeid and sd.nodeid = ? order by sd.timestamp desc limit 1");
         stmt.all(req.params.nodeid, function(err, row) {
                if(err) {
                console.error(err);
