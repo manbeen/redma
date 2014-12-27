@@ -12,8 +12,10 @@
 {
     NSString *waterValue;
     NSString *smokeValue;
-    bool waterValueToggle;
-    bool smokeValueToggle;
+    bool waterButtonToggle;
+    bool smokeButtonToggle;
+    bool waterOK;
+    bool smokeOK;
 }
 
 @end
@@ -38,30 +40,40 @@
 
 
 - (IBAction)handleSmokeButtonClick:(id)sender {
-    if(smokeValueToggle) {
+    if(smokeButtonToggle) {
         [self.smokeButton setTitle:smokeValue forState:UIControlStateNormal];
-        smokeValueToggle = NO;
+        smokeButtonToggle = NO;
     } else {
-        [self.smokeButton setTitle:@"OK" forState:UIControlStateNormal];
-        smokeValueToggle = YES;
+        if(smokeOK) {
+            [self.smokeButton setTitle:@"OK" forState:UIControlStateNormal];
+        } else {
+            [self.smokeButton setTitle:@"Alert" forState:UIControlStateNormal];
+        }
+        smokeButtonToggle = YES;
     }
 }
 
 - (IBAction)handleWaterButtonClick:(id)sender {
-    if(waterValueToggle) {
+    if(waterButtonToggle) {
         [self.waterButton setTitle:waterValue forState:UIControlStateNormal];
-        waterValueToggle = NO;
+        waterButtonToggle = NO;
     } else {
-        [self.waterButton setTitle:@"OK" forState:UIControlStateNormal];
-        waterValueToggle = YES;
+        if(waterOK) {
+            [self.waterButton setTitle:@"OK" forState:UIControlStateNormal];
+        } else {
+            [self.waterButton setTitle:@"Alert" forState:UIControlStateNormal];
+        }
+        waterButtonToggle = YES;
     }
 }
 
 - (void) clearData{
     waterValue = @"";
     smokeValue = @"";
-    waterValueToggle = YES;
-    smokeValueToggle = YES;
+    waterButtonToggle = YES;
+    smokeButtonToggle = YES;
+    waterOK = YES;
+    smokeOK = YES;
     self.errorLabel.text = @"";
     self.temperatureLabel.text = @"";
     [self.waterButton setTitle:@"" forState:UIControlStateNormal];
@@ -126,15 +138,60 @@
                          
                          if([keyAsString isEqualToString:@"sensor1" ] ) {
                              self.temperatureLabel.text = valueAsString;
-                             self.temperatureLabel.textColor = [UIColor greenColor];
+                         } else if([keyAsString isEqualToString:@"sensor1th" ]) {
+                             if ([value isKindOfClass:[NSNumber class]]) {
+                                 float tempVal = [(NSNumber*)value floatValue];
+                                 if(tempVal > 0.0) {
+                                     // we have an issue
+                                     self.temperatureLabel.textColor = [UIColor redColor];
+                                 } else {
+                                     // all is good
+                                     self.temperatureLabel.textColor = [UIColor greenColor];
+                                 }
+                             } else {
+                                 // this should never happen
+                                 NSLog(@"sensorth1 is not a float value");
+                             }
                          } else if( [keyAsString isEqualToString:@"sensor2"]) {
                              waterValue = valueAsString;
-                             [self.waterButton setTitle:@"OK" forState:UIControlStateNormal];
-                             [self.waterButton setTitleColor:[UIColor greenColor] forState:UIControlStateNormal];
+                         } else if([keyAsString isEqualToString:@"sensorth2" ]) {
+                             if ([value isKindOfClass:[NSNumber class]]) {
+                                 float tempVal = [(NSNumber*)value floatValue];
+                                 if(tempVal > 0.0) {
+                                     // we have an issue
+                                     [self.waterButton setTitle:@"Alert" forState:UIControlStateNormal];
+                                     [self.waterButton setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
+                                     waterOK = NO;
+                                 } else {
+                                     // all is good
+                                     [self.waterButton setTitle:@"OK" forState:UIControlStateNormal];
+                                     [self.waterButton setTitleColor:[UIColor greenColor] forState:UIControlStateNormal];
+                                     waterOK = YES;
+                                 }
+                             } else {
+                                 // this should never happen
+                                 NSLog(@"sensorth2 is not a float value");
+                             }
                          } else if( [keyAsString isEqualToString:@"sensor3"]) {
                              smokeValue = valueAsString;
-                             [self.smokeButton setTitle:@"OK" forState:UIControlStateNormal];
-                             [self.smokeButton setTitleColor:[UIColor greenColor] forState:UIControlStateNormal];
+                         } else if([keyAsString isEqualToString:@"sensorth3" ]) {
+                             if ([value isKindOfClass:[NSNumber class]]) {
+                                 float tempVal = [(NSNumber*)value floatValue];
+                                 if(tempVal > 0.0) {
+                                     // we have an issue
+                                     [self.smokeButton setTitle:@"Alert" forState:UIControlStateNormal];
+                                     [self.smokeButton setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
+                                     smokeOK = NO;
+                                 } else {
+                                     // all is good
+                                     [self.smokeButton setTitle:@"OK" forState:UIControlStateNormal];
+                                     [self.smokeButton setTitleColor:[UIColor greenColor] forState:UIControlStateNormal];
+                                     smokeOK = YES;
+                                 }
+                             } else {
+                                 // this should never happen
+                                 NSLog(@"sensorth2 is not a float value");
+                             }
                          } else if( [keyAsString isEqualToString:@"timestamp"]) {
                              self.timestampLabel.text = valueAsString;
                          }
