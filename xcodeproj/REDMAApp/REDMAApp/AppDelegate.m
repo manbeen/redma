@@ -2,7 +2,7 @@
 //  AppDelegate.m
 //  REDMAApp
 //
-//  Created by Manbeen Kohli on 2014-12-26.
+//  Created by Sajeev Kohli on 2014-12-26.
 //  Copyright (c) 2014 Saj. All rights reserved.
 //
 
