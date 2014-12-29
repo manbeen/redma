@@ -16,7 +16,6 @@
     bool smokeButtonToggle;
     bool waterOK;
     bool smokeOK;
-    bool isValidDevice;
 }
 
 @end
@@ -28,17 +27,15 @@
  */
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // validate udid
-    isValidDevice = NO;
-    if([self validateUDID] == NO) {
-        [self clearData];
-        self.errorLabel.text = @"This device is not registered :-(";
-         self.errorLabel.textColor = [UIColor redColor];
-    } else {
-        // connect to the web service and get data when the
-        // view controller is loaded for the first time.
-        [self getDataFromWebservice];
-    }
+    // connect to the web service and get data when the
+    // view controller is loaded for the first time.
+    [self getDataFromWebservice];
+    
+    // create a thread to automatically refresh data every 10 seconds
+    NSThread* refreshThread = [[NSThread alloc] initWithTarget:self
+                            selector:@selector(refreshData)
+                            object:nil];
+    [refreshThread start];  // Actually create the thread
     
 }
 
@@ -46,14 +43,17 @@
     [super didReceiveMemoryWarning];
 }
 
+- (void) refreshData {
+    for(;;) {
+        [NSThread sleepForTimeInterval:10.0f];
+        [self getDataFromWebservice];
+    }
+}
+
 /**
  * This method is called when the refresh button is clicked.
  */
 - (IBAction)handleRefreshButtonClick:(id)sender {
-    if(isValidDevice == NO) {
-        // If the device is not valid - do nothing
-        return;
-    }
     // get data from the web service when the refresh button
     // is clicked.
     [self getDataFromWebservice];
@@ -136,77 +136,6 @@
     [self clearData];
     self.errorLabel.text = @"WebService connection failed :-(";
     self.errorLabel.textColor = [UIColor redColor];
-}
-
-/**
- * This method validates the user's UDID (subscriberID)
- */
--(bool) validateUDID {
-    
-    NSUUID *UDID= [[UIDevice currentDevice] identifierForVendor];
-    NSString *deviceId = [UDID UUIDString];
-    isValidDevice = NO;
-    
-    NSURL *subscriberURL = [NSURL URLWithString:@"http://jkhomeserver.dyndns.org:3000/subscriber"];
-    NSURLRequest *subscriberRequest = [NSURLRequest requestWithURL: subscriberURL];
-    [NSURLConnection sendAsynchronousRequest: subscriberRequest
-                                       queue:[NSOperationQueue mainQueue]
-                           completionHandler:^(NSURLResponse *response,
-                                               NSData *data, NSError *connectionError)
-     
-     {
-         // Ensure that data was returned and that there were no connection errors
-         // before proceeding
-         if(data.length > 0 && connectionError == nil) {
-             // Read the required data from the returned JSON response
-             NSError *myError = nil;
-             NSDictionary *subscriberResDict = [NSJSONSerialization
-                                                JSONObjectWithData:data
-                                                options:0
-                                                error:&myError];
-             // the data that we care about is in the json tag
-             NSArray *subscriberJSONRes = [subscriberResDict objectForKey:@"json"];
-             NSLog(subscriberJSONRes.description);
-             for (id tempElem in subscriberJSONRes) {
-                 if( ![tempElem isKindOfClass:[NSDictionary class]]) {
-                     // this should never happen
-                     NSLog(@"The value %@ in the array is not a dictionary", [tempElem stringValue]);
-                     continue;
-                 }
-                 // the json tag should return a list of key-value pairs i.e. a dictionary
-                 NSDictionary *elem = (NSDictionary*)tempElem;
-                 NSLog(elem.description);
-                 for(id key in elem) {
-                     // iterate over the dictionary to get key value pairs
-                     id value = [elem objectForKey:key];
-                     // obtain the key data as a string
-                     NSString *keyAsString = nil;
-                     if([key isKindOfClass:[NSString class]]) {
-                         keyAsString = (NSString *)key;
-                     } else {
-                         keyAsString = [key stringValue];
-                     }
-                     // obtain the value data as a string
-                     NSString *valueAsString = nil;
-                     if([value isKindOfClass:[NSString class]]) {
-                         valueAsString = (NSString *)value;
-                     } else {
-                         valueAsString = [value stringValue];
-                     }
-                     
-                     if ([keyAsString isEqualToString:@"subscriberID"]) {
-                         if( [valueAsString isEqualToString:deviceId] ) {
-                             isValidDevice = YES;
-                             break;
-                         }
-                     }
-                 }
-             }
-         } else {
-             [self displayError];
-         }
-    }];
-    return isValidDevice;
 }
 
 
