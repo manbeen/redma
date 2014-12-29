@@ -2,7 +2,7 @@
 //  ViewController.m
 //  REDMAApp
 //
-//  Created by Manbeen Kohli on 2014-12-26.
+//  Created by Sajeev Kohli on 2014-12-26.
 //  Copyright (c) 2014 Saj. All rights reserved.
 //
 
@@ -16,6 +16,7 @@
     bool smokeButtonToggle;
     bool waterOK;
     bool smokeOK;
+    bool isValidDevice;
 }
 
 @end
@@ -27,9 +28,17 @@
  */
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // connect to the web service and get data when the
-    // view controller is loaded for the first time.
-    [self getDataFromWebservice];
+    // validate udid
+    isValidDevice = NO;
+    if([self validateUDID] == NO) {
+        [self clearData];
+        self.errorLabel.text = @"This device is not registered :-(";
+         self.errorLabel.textColor = [UIColor redColor];
+    } else {
+        // connect to the web service and get data when the
+        // view controller is loaded for the first time.
+        [self getDataFromWebservice];
+    }
     
 }
 
@@ -41,6 +50,10 @@
  * This method is called when the refresh button is clicked.
  */
 - (IBAction)handleRefreshButtonClick:(id)sender {
+    if(isValidDevice == NO) {
+        // If the device is not valid - do nothing
+        return;
+    }
     // get data from the web service when the refresh button
     // is clicked.
     [self getDataFromWebservice];
@@ -126,6 +139,78 @@
 }
 
 /**
+ * This method validates the user's UDID (subscriberID)
+ */
+-(bool) validateUDID {
+    
+    NSUUID *UDID= [[UIDevice currentDevice] identifierForVendor];
+    NSString *deviceId = [UDID UUIDString];
+    isValidDevice = NO;
+    
+    NSURL *subscriberURL = [NSURL URLWithString:@"http://jkhomeserver.dyndns.org:3000/subscriber"];
+    NSURLRequest *subscriberRequest = [NSURLRequest requestWithURL: subscriberURL];
+    [NSURLConnection sendAsynchronousRequest: subscriberRequest
+                                       queue:[NSOperationQueue mainQueue]
+                           completionHandler:^(NSURLResponse *response,
+                                               NSData *data, NSError *connectionError)
+     
+     {
+         // Ensure that data was returned and that there were no connection errors
+         // before proceeding
+         if(data.length > 0 && connectionError == nil) {
+             // Read the required data from the returned JSON response
+             NSError *myError = nil;
+             NSDictionary *subscriberResDict = [NSJSONSerialization
+                                                JSONObjectWithData:data
+                                                options:0
+                                                error:&myError];
+             // the data that we care about is in the json tag
+             NSArray *subscriberJSONRes = [subscriberResDict objectForKey:@"json"];
+             NSLog(subscriberJSONRes.description);
+             for (id tempElem in subscriberJSONRes) {
+                 if( ![tempElem isKindOfClass:[NSDictionary class]]) {
+                     // this should never happen
+                     NSLog(@"The value %@ in the array is not a dictionary", [tempElem stringValue]);
+                     continue;
+                 }
+                 // the json tag should return a list of key-value pairs i.e. a dictionary
+                 NSDictionary *elem = (NSDictionary*)tempElem;
+                 NSLog(elem.description);
+                 for(id key in elem) {
+                     // iterate over the dictionary to get key value pairs
+                     id value = [elem objectForKey:key];
+                     // obtain the key data as a string
+                     NSString *keyAsString = nil;
+                     if([key isKindOfClass:[NSString class]]) {
+                         keyAsString = (NSString *)key;
+                     } else {
+                         keyAsString = [key stringValue];
+                     }
+                     // obtain the value data as a string
+                     NSString *valueAsString = nil;
+                     if([value isKindOfClass:[NSString class]]) {
+                         valueAsString = (NSString *)value;
+                     } else {
+                         valueAsString = [value stringValue];
+                     }
+                     
+                     if ([keyAsString isEqualToString:@"subscriberID"]) {
+                         if( [valueAsString isEqualToString:deviceId] ) {
+                             isValidDevice = YES;
+                             break;
+                         }
+                     }
+                 }
+             }
+         } else {
+             [self displayError];
+         }
+    }];
+    return isValidDevice;
+}
+
+
+/**
  * Motherload. This method does the important work here.
  * It talks to the web service to retrieve sensor data stored
  * in the database.
@@ -140,11 +225,11 @@
         // 1. creating a URL object
         // 2. creating a request object
         // 3. creating a URL Connection object
-        // 4. sending an asyncrhonous request to the web service URL
+        // 4. sending an asynchronous request to the web service URL
         NSURL *subscriberURL = [NSURL URLWithString: @"http://jkhomeserver.dyndns.org:3000/sensoryData/1"];
         NSURLRequest *subscriberRequest = [NSURLRequest requestWithURL:subscriberURL];
         [NSURLConnection sendAsynchronousRequest:subscriberRequest
-                                           queue:[NSOperationQueue mainQueue]
+                                    queue:[NSOperationQueue mainQueue]
                                completionHandler:^(NSURLResponse *response,
                                                    NSData *data, NSError *connectionError)
          {
